@@ -1,0 +1,18 @@
+{
+  "name": "streaming-json",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify main.js -o public/javascripts/build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tom Buchok <tom@buchok.com> (http://buchok.com/)",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^3.40.0",
+    "connect": "^2.14.4",
+    "hyperquest": "^0.3.0",
+    "random-words": "0.0.1"
+  }
+}
