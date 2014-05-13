@@ -2,36 +2,40 @@ var hyperquest = require('hyperquest')
   , url = require('url')
   , querystring = require('querystring')
   , JSON_URI = 'http://localhost:3000/json?'
+  , eventCount = 0
+  , objectCount = 0
   , results = []
 ;
 
 var query = querystring.parse(url.parse(window.location.href).query);
 
 var writeToDom = function(o) {
-  var data = JSON.parse(o);
+  document.querySelector('#objects').innerHTML = (objectCount += 1);
   var p = document.createElement('p');
-  p.innerHTML = data.message || 'default';
+  p.innerHTML = o.message;
   document.body.appendChild(p);
 };
 
-hyperquest.get({ uri: JSON_URI + querystring.stringify(query), method: 'get' })
+hyperquest(JSON_URI + querystring.stringify(query))
   .on('data', function(chunk) {
     if (query.buffer)
       return results.push(chunk);
-    var objects = chunk.split('\n');
-    objects
-      .filter(function(o) { return o.length > 0 })
+    document.querySelector('#events').innerHTML = eventCount += 1;
+    chunk
+      .split('\n')
+      .filter(function(o) { return o.length > 0; })
+      .map(function(o) { return JSON.parse('' + o) })
       .forEach(writeToDom)
     ;
   })
   .on('end', function() {
-    console.log('complete!');
     if (!query.buffer)
       return;
+    document.querySelector('#events').innerHTML = eventCount += 1;
     results
       .join('')
       .split('\n')
-      .filter(function(o) { return o.length > 0 })
+      .map(function(json) { return JSON.parse(json) })
       .forEach(writeToDom)
     ;
   })

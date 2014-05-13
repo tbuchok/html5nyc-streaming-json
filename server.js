@@ -22,7 +22,11 @@ var app = connect()
     var pow = (req.query.objects || '10^3').split('^');
     for(var i = 0; i < Math.pow(pow[0], pow[1]); i++) {
       var value = randomWords({ exactly: 4, join: ' ' });
-      res.write(JSON.stringify({ message: value }) + '\n')
+      var message = '';
+      if (i > 0)
+        message += '\n';
+      message += JSON.stringify({ message: value });
+      res.write(message);
     }
     res.end();
   })
