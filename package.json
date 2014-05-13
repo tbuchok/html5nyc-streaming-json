@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "browserify main.js -o public/javascripts/build.js",
+    "build": "mkdir -p public/javascripts && browserify main.js -o public/javascripts/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tom Buchok <tom@buchok.com> (http://buchok.com/)",
