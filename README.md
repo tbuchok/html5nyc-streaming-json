@@ -1,4 +1,4 @@
-html5nyc-streaming-json
+nychtml5-streams
 =======================
 
 Demonstrating streaming JSON
