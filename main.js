@@ -8,7 +8,13 @@ var hyperquest = require('hyperquest')
   , query = querystring.parse(url.parse(window.location.href).query)
 ;
 
-document.querySelector('#type').innerHTML = query.buffer ? 'buffer' : 'streaming';
+var header = query.buffer ? 'buffer ' : 'streaming ';
+// <3 http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+header += Math.pow.apply(null, query.objects.split('^'))
+            .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          ;
+header += ' objects!'
+document.querySelector('#type').innerHTML = header;
 
 var writeToDom = function(o) {
   document.querySelector('#objects').innerHTML = (objectCount += 1);
@@ -28,6 +34,7 @@ hyperquest(JSON_URI + querystring.stringify(query))
       .map(function(o) { return JSON.parse('' + o) })
       .forEach(writeToDom)
     ;
+    window.scrollTo(0,document.body.scrollHeight);
   })
   .on('end', function() {
     if (!query.buffer)
@@ -39,5 +46,6 @@ hyperquest(JSON_URI + querystring.stringify(query))
       .map(function(json) { return JSON.parse(json) })
       .forEach(writeToDom)
     ;
+    window.scrollTo(0,document.body.scrollHeight);
   })
 ;

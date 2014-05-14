@@ -33,7 +33,7 @@ var app = connect()
         res.write(message);
       }
       if (count < Math.pow(pow[0], pow[1]))
-        return setImmediate(sendObjects);
+        return setTimeout(sendObjects, 250);
       res.end();
     }
     sendObjects();
