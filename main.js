@@ -5,9 +5,10 @@ var hyperquest = require('hyperquest')
   , eventCount = 0
   , objectCount = 0
   , results = []
+  , query = querystring.parse(url.parse(window.location.href).query)
 ;
 
-var query = querystring.parse(url.parse(window.location.href).query);
+document.querySelector('#type').innerHTML = query.buffer ? 'buffer' : 'streaming';
 
 var writeToDom = function(o) {
   document.querySelector('#objects').innerHTML = (objectCount += 1);
